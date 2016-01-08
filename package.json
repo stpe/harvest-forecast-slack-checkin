@@ -1,0 +1,30 @@
+{
+  "name": "slack-forecast-checkin",
+  "version": "0.0.1",
+  "description": "Automatic daily checkin from Forecast",
+  "main": "app/checkin.js",
+  "engines": {
+    "node": "5.4.0",
+    "npm": "3.5.2"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "foreman run worker",
+    "test": "mocha test && eslint ."
+  },
+  "author": "Stefan Pettersson <stefpet@gmail.com> (https://github.com/stpe/)",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "forecast-api": "0.0.1",
+    "moment": "2.11.0",
+    "slack-node": "0.1.7"
+  },
+  "devDependencies": {
+    "dotenv": "1.2.0",
+    "eslint": "1.10.3",
+    "nock": "4.0.0",
+    "should": "8.0.2"
+  }
+}
