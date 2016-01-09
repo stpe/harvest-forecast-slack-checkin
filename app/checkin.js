@@ -6,12 +6,17 @@ var moment = require("moment");
 
 var forecast = require("./lib/forecast");
 var peopleFilter = require("./lib/peoplefilter");
-var projectLookup = require("./lib/projectLookup");
+var projectLookup = require("./lib/projectlookup");
+var activity = require("./lib/activity");
+var personName = require("./lib/personname");
+var conjunct = require("./lib/conjunct");
 
 var options = {
   startDate: moment(),
   endDate: moment().add(1, "day")
 };
+
+console.log(options.startDate.format("YYYY-MM-DD") + " according to Forecast...");
 
 Promise.all([
   forecast.people(),
@@ -22,17 +27,17 @@ Promise.all([
   let projects = data[1];
   let assignments = data[2];
 
+  // exclude persons
   people = peopleFilter.exclude(people, process.env.PEOPLE_EXCLUDE_FILTER);
 
+  // sort persons alphabetically
+  people.sort((a, b) => a.first_name.localeCompare(b.first_name));
+
+  // allow projects to be looked up by id
   projects = projectLookup.lookup(projects);
 
-  console.log("Assignments");
-  console.log(JSON.stringify(assignments.map(a => `${a.id}: project ${a.project_id}, person ${a.person_id} : ${a.start_date} - ${a.end_date}`), 0, 2));
+  people.forEach(p => {
 
-  console.log("Projects");
-  console.log(JSON.stringify(projects, 0, 2));
 
-  console.log("People");
-  console.log(JSON.stringify(people.map(p => `${p.id}: ${p.first_name}`), 0, 2));
 
 }).catch(e => console.error(e.stack));
