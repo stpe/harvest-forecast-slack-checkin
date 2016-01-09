@@ -37,7 +37,30 @@ Promise.all([
   projects = projectLookup.lookup(projects);
 
   people.forEach(p => {
+    // get person activity for current day
+    let personActivity = activity.get(p, assignments);
 
+    if (personActivity.length === 0) {
+      // no entry for person
+      console.log(`${personName(p)} got no entry for today.`);
+    } else if (personActivity.length === 1 && personActivity[0].project_id === parseInt(process.env.PROJECT_ID_TIME_OFF)) {
+      // person got time off and does nothing else
+      let endDate = moment(personActivity[0].end_date, "YYYY-MM-DD");
+      if (endDate.day() === 6 || endDate.day() === 0) {
+        // if weekend, back next Monday
+        endDate.day(1 + 7);
+      } else {
+        // back the next day
+        endDate.add(1, "day");
+      }
 
+      console.log(`${personName(p)} is off and will be back ${endDate.format("YYYY-MM-DD")}.`);
+    } else {
+      let activities = personActivity
+        .filter(a => a.project_id !== parseInt(process.env.PROJECT_ID_TIME_OFF))
+        .map(a => projects[a.project_id].name);
 
+      console.log(`${personName(p)} is planning to do ${conjunct(activities)}.`);
+    }
+  });
 }).catch(e => console.error(e.stack));
