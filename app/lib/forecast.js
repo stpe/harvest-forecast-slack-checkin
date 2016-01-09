@@ -41,4 +41,15 @@ forecast.assignments = function(options) {
   );
 };
 
+forecast.clients = function() {
+  return new Promise(
+    function(resolve, reject) {
+      forecastApi.clients(function(err, clients) {
+        if (err) reject(err);
+        resolve(clients);
+      });
+    }
+  );
+};
+
 module.exports = forecast;

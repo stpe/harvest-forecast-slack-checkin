@@ -26,4 +26,8 @@ describe("Forecast", () => {
     };
     return forecast.assignments(options).should.eventually.be.an.Array();
   });
+
+  it("Get Clients data", () => {
+    return forecast.clients().should.eventually.be.an.Array();
+  });
 });
