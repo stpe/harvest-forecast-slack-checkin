@@ -6,7 +6,7 @@ var moment = require("moment");
 
 var forecast = require("./lib/forecast");
 var peopleFilter = require("./lib/peoplefilter");
-var projectLookup = require("./lib/projectlookup");
+var lookup = require("./lib/lookup");
 var activity = require("./lib/activity");
 var personName = require("./lib/personname");
 var conjunct = require("./lib/conjunct");
@@ -21,20 +21,19 @@ console.log(options.startDate.format("YYYY-MM-DD") + " according to Forecast..."
 Promise.all([
   forecast.people(),
   forecast.projects(),
+  forecast.clients(),
   forecast.assignments(options)
 ]).then(data => {
   let people = data[0];
-  let projects = data[1];
-  let assignments = data[2];
+  let projects = lookup(data[1]);
+  let clients = lookup(data[2]);
+  let assignments = data[3];
 
   // exclude persons
   people = peopleFilter.exclude(people, process.env.PEOPLE_EXCLUDE_FILTER);
 
   // sort persons alphabetically
   people.sort((a, b) => a.first_name.localeCompare(b.first_name));
-
-  // allow projects to be looked up by id
-  projects = projectLookup.lookup(projects);
 
   people.forEach(p => {
     // get person activity for current day
@@ -58,9 +57,19 @@ Promise.all([
     } else {
       let activities = personActivity
         .filter(a => a.project_id !== parseInt(process.env.PROJECT_ID_TIME_OFF))
-        .map(a => projects[a.project_id].name);
+        .map(a => {
+          let project = projects[a.project_id];
 
-      console.log(`${personName(p)} is planning to do ${conjunct(activities)}.`);
+          if (project.client_id === parseInt(process.env.CLIENT_ID_INTERNAL)) {
+            // if internal, use project name
+            return project.name;
+          }
+
+          // otherwise use client name
+          return clients[project.client_id].name;
+        });
+
+      console.log(`${personName(p)} is planning to work with ${conjunct(activities)}.`);
     }
   });
 }).catch(e => console.error(e.stack));
