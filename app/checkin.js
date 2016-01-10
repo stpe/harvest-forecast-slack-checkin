@@ -1,6 +1,8 @@
 "use strict";
 
-require("dotenv").load();
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").load();  
+}
 
 var moment = require("moment");
 
@@ -9,8 +11,8 @@ var peopleFilter = require("./lib/peoplefilter");
 var lookup = require("./lib/lookup");
 var activity = require("./lib/activity");
 var personName = require("./lib/personname");
-var personActivities = require("./lib/personActivities");
-var personTimeOff = require("./lib/personTimeOff");
+var personActivities = require("./lib/personactivities");
+var personTimeOff = require("./lib/persontimeoff");
 var conjunct = require("./lib/conjunct");
 var slack = require("./lib/slack");
 
