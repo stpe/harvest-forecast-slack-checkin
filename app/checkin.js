@@ -9,6 +9,8 @@ var peopleFilter = require("./lib/peoplefilter");
 var lookup = require("./lib/lookup");
 var activity = require("./lib/activity");
 var personName = require("./lib/personname");
+var personActivities = require("./lib/personActivities");
+var personTimeOff = require("./lib/personTimeOff");
 var conjunct = require("./lib/conjunct");
 
 var options = {
@@ -44,32 +46,12 @@ Promise.all([
       console.log(`${personName(p)} got no entry for today.`);
     } else if (personActivity.length === 1 && personActivity[0].project_id === parseInt(process.env.PROJECT_ID_TIME_OFF)) {
       // person got time off and does nothing else
-      let endDate = moment(personActivity[0].end_date, "YYYY-MM-DD");
-      if (endDate.day() === 6 || endDate.day() === 0) {
-        // if weekend, back next Monday
-        endDate.day(1 + 7);
-      } else {
-        // back the next day
-        endDate.add(1, "day");
-      }
-
+      let endDate = personTimeOff(personActivity);
       console.log(`${personName(p)} is off and will be back ${endDate.format("YYYY-MM-DD")}.`);
     } else {
-      let activities = personActivity
-        .filter(a => a.project_id !== parseInt(process.env.PROJECT_ID_TIME_OFF))
-        .map(a => {
-          let project = projects[a.project_id];
-
-          if (project.client_id === parseInt(process.env.CLIENT_ID_INTERNAL)) {
-            // if internal, use project name
-            return project.name;
-          }
-
-          // otherwise use client name
-          return clients[project.client_id].name;
-        });
-
-      console.log(`${personName(p)} is planning to work with ${conjunct(activities)}.`);
+      // normal assignments (but ignore partial day time off)
+      let activities = personActivities(personActivity, projects, clients);
+      console.log(`${personName(p)} will work with ${conjunct(activities)}.`);
     }
   });
 }).catch(e => console.error(e.stack));
