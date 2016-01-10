@@ -19,6 +19,11 @@ var options = {
 };
 
 console.log(options.startDate.format("YYYY-MM-DD") + " according to Forecast...");
+// skip if weekend
+if (process.env.SKIP_IF_WEEKEND && (moment().day() === 6 || moment().day() === 0)) {
+  console.log("It's weekend, skipping...");
+  process.exit(); // eslint-disable-line no-process-exit
+}
 
 Promise.all([
   forecast.people(),
