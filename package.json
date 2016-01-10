@@ -24,7 +24,6 @@
     "slack-node": "0.1.7"
   },
   "devDependencies": {
-    "dotenv": "1.2.0",
     "eslint": "1.10.3",
     "nock": "4.0.0",
     "should": "8.0.2"
