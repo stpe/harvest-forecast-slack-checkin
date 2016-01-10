@@ -12,13 +12,13 @@ var personName = require("./lib/personname");
 var personActivities = require("./lib/personActivities");
 var personTimeOff = require("./lib/personTimeOff");
 var conjunct = require("./lib/conjunct");
+var slack = require("./lib/slack");
 
 var options = {
   startDate: moment(),
-  endDate: moment().add(1, "day")
+  endDate: moment()
 };
 
-console.log(options.startDate.format("YYYY-MM-DD") + " according to Forecast...");
 // skip if weekend
 if (process.env.SKIP_IF_WEEKEND && (moment().day() === 6 || moment().day() === 0)) {
   console.log("It's weekend, skipping...");
@@ -42,21 +42,41 @@ Promise.all([
   // sort persons alphabetically
   people.sort((a, b) => a.first_name.localeCompare(b.first_name));
 
+  let msg = [];
+
   people.forEach(p => {
     // get person activity for current day
     let personActivity = activity.get(p, assignments);
 
     if (personActivity.length === 0) {
       // no entry for person
-      console.log(`${personName(p)} got no entry for today.`);
+      msg.push(`${personName(p)} got no entry for today.`);
     } else if (personActivity.length === 1 && personActivity[0].project_id === parseInt(process.env.PROJECT_ID_TIME_OFF)) {
       // person got time off and does nothing else
       let endDate = personTimeOff(personActivity);
-      console.log(`${personName(p)} is off and will be back ${endDate.format("YYYY-MM-DD")}.`);
+      msg.push(`${personName(p)} is off and will be back ${endDate.format("YYYY-MM-DD")}.`);
     } else {
       // normal assignments (but ignore partial day time off)
       let activities = personActivities(personActivity, projects, clients);
-      console.log(`${personName(p)} will work with ${conjunct(activities)}.`);
+      msg.push(`${personName(p)} will work with ${conjunct(activities)}.`);
     }
+  });
+
+  // send as Slack msg
+  slack.send({
+    attachments: [
+      {
+         "fallback": `${options.startDate.format("dddd YYYY-MM-DD")} according to Forecast...`,
+         "pretext": `${options.startDate.format("dddd YYYY-MM-DD")} :sunrise: according to <${process.env.FORECAST_TEAM_URL}|Forecast>...`,
+         "color": "good",
+         "mrkdwn_in": ["pretext", "text", "fields"],
+         "fields": [
+            {
+               "value": msg.join("\n"),
+               "short": false
+            }
+         ]
+      }
+     ]
   });
 }).catch(e => console.error(e.stack));
