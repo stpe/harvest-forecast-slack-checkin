@@ -17,6 +17,7 @@
   "author": "Stefan Pettersson <stefpet@gmail.com> (https://github.com/stpe/)",
   "license": "UNLICENSED",
   "dependencies": {
+    "dotenv": "1.2.0",
     "forecast-api": "0.0.1",
     "lodash.merge": "3.3.2",
     "moment": "2.11.0",
