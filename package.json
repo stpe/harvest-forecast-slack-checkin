@@ -15,7 +15,11 @@
     "test": "mocha test && eslint ."
   },
   "author": "Stefan Pettersson <stefpet@gmail.com> (https://github.com/stpe/)",
-  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stpe/harvest-forecast-slack-checkin"
+  },
+  "license": "MIT",
   "dependencies": {
     "dotenv": "1.2.0",
     "forecast-api": "0.0.1",
