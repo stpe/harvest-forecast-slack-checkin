@@ -54,8 +54,8 @@ SLACK_ICON_URL=https://forecastapp.com/assets/images/apple-touch-icon.png
 SLACK_USERNAME=Forecast
 ```
 
-- `FORECAST_ACCOUNT_ID` - Your Forecast Account ID.
-- `FORECAST_AUTH_TOKEN` - Your Forecast Authentication Token.
+- `FORECAST_ACCOUNT_ID` - Your Forecast Account ID
+- `FORECAST_AUTH_TOKEN` - Your Forecast Authentication Token
 
   As of now there is no super convenient way to get your account ID and authorization token.
 
@@ -69,15 +69,15 @@ SLACK_USERNAME=Forecast
    8. Find *forecast-account-id*, the value is your `FORECAST_ACCOUNT_ID`.
 
 - `PEOPLE_EXCLUDE_FILTER` - Comma separated list of people IDs to exclude
-- `PROJECT_ID_TIME_OFF` - Project ID of what is time off.
-- `CLIENT_ID_INTERNAL` - Client ID to determine what is internal work.
-- `FORECAST_TEAM_URL` - Team URL used as link in Slack message.
-- `SKIP_IF_WEEKEND` - Set to something to not run on weekend (otherwise remove line).
+- `PROJECT_ID_TIME_OFF` - Project ID of what is time off
+- `CLIENT_ID_INTERNAL` - Client ID to determine what is internal work
+- `FORECAST_TEAM_URL` - Team URL used as link in Slack message
+- `SKIP_IF_WEEKEND` - Set to something to not run on weekend (otherwise remove line)
 
-- `SLACK_WEBHOOK` - Webhook URL as stated on [Incoming Webhook integration page](https://my.slack.com/services/new/incoming-webhook/).
-- `SLACK_CHANNEL` - Slack channel to post message in (without `#`).
-- `SLACK_ICON_URL` - URL to Slack message icon.
-- `SLACK_USERNAME` - Slack username to use when posting message.
+- `SLACK_WEBHOOK` - Webhook URL as stated on [Incoming Webhook integration page](https://my.slack.com/services/new/incoming-webhook/)
+- `SLACK_CHANNEL` - Slack channel to post message in (without `#`)
+- `SLACK_ICON_URL` - URL to Slack message icon
+- `SLACK_USERNAME` - Slack username to use when posting message
 
 ## Tests
 
