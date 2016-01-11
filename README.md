@@ -57,15 +57,16 @@ SLACK_USERNAME=Forecast
 - `FORECAST_ACCOUNT_ID` - Your Forecast Account ID.
 - `FORECAST_AUTH_TOKEN` - Your Forecast Authentication Token.
 
-As of now there is no super convenient way to get your account ID and authorization token.
- 1. Open up your browser of choice.
- 2. Open *Developer Tools*.
- 3. Select the *Network* tab, and then *XHR*.
- 4. Open a page on Forecast while logged in.
- 5. In the list of requests, click the one of the *GET* requests to see *Headers*.
- 6. Scroll down to *Request Headers*.
- 7. Find *authorization*, the long string starting with _Bearer_ is the `FORECAST_AUTH_TOKEN`.
- 8. Find *forecast-account-id*, the value is your `FORECAST_ACCOUNT_ID`.
+  As of now there is no super convenient way to get your account ID and authorization token.
+
+   1. Open up your browser of choice.
+   2. Open *Developer Tools*.
+   3. Select the *Network* tab, and then *XHR*.
+   4. Open a page on Forecast while logged in.
+   5. In the list of requests, click the one of the *GET* requests to see *Headers*.
+   6. Scroll down to *Request Headers*.
+   7. Find *authorization*, the long string starting with _Bearer_ is the `FORECAST_AUTH_TOKEN`.
+   8. Find *forecast-account-id*, the value is your `FORECAST_ACCOUNT_ID`.
 
 - `PEOPLE_EXCLUDE_FILTER` - Comma separated list of people IDs to exclude
 - `PROJECT_ID_TIME_OFF` - Project ID of what is time off.
@@ -94,26 +95,26 @@ To deploy to [Heroku](https://www.heroku.com) you need to have an account and ha
 
 1. Create an Heroku application:
 
-`heroku create your-appname-of-choice`
+    `heroku create your-appname-of-choice`
 
 2. Push your local configuration to Heroku:
 
-`heroku config:push`
+    `heroku config:push`
 
 3. Deploy the code to Heroku:
 
-`git push heroku master`
+    `git push heroku master`
 
 4. Verify that it does run:
 
-`heroku run worker`
+    `heroku run worker`
 
 5. Set up the Heroku Scheduler addon:
 
-`heroku addons:create scheduler:standard`
+    `heroku addons:create scheduler:standard`
 
 6. Configure the scheduler:
 
-`heroku addons:open scheduler`
+    `heroku addons:open scheduler`
 
-Add a new job where the command is simply `worker` scheduled daily to the time you want the message posted in Slack.
+  Add a new job where the command is simply `worker` scheduled daily to the time you want the message posted in Slack.
