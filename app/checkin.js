@@ -1,7 +1,7 @@
 "use strict";
 
 if (process.env.NODE_ENV !== "production") {
-  require("dotenv").load();  
+  require("dotenv").load();
 }
 
 var moment = require("moment");
@@ -81,4 +81,4 @@ Promise.all([
       }
      ]
   });
-}).catch(e => console.error(e.stack));
+}).catch(e => console.error(e));
