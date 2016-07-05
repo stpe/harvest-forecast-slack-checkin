@@ -1,8 +1,6 @@
 "use strict";
 
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").load();
-}
+require("dotenv").config({ silent: true });
 
 var moment = require("moment");
 
@@ -37,6 +35,18 @@ Promise.all([
   let projects = lookup(data[1]);
   let clients = lookup(data[2]);
   let assignments = data[3];
+
+  // send DM to script admin if failed to retrieve something
+  if (data.some(d => !d)) {
+    console.error("Could not retrieve data from Forecast.");
+    if (process.env.SLACK_FORECAST_ADMIN) {
+      slack.send({
+        channel: "@" + process.env.SLACK_FORECAST_ADMIN,
+        text: "Just wanted to let you know I could not retrieve data from Forecast. Most likely the FORECAST_AUTH_TOKEN has expired and you need to set a new one."
+      });
+    }
+    return;
+  }
 
   people = peopleFilter
     // exclude persons

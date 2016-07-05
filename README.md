@@ -52,6 +52,7 @@ SLACK_WEBHOOK=https://hooks.slack.com/services/...
 SLACK_CHANNEL=checkin
 SLACK_ICON_URL=https://forecastapp.com/assets/images/apple-touch-icon.png
 SLACK_USERNAME=Forecast
+SLACK_FORECAST_ADMIN=stefan
 ```
 
 * `FORECAST_ACCOUNT_ID` - Your Forecast Account ID
@@ -68,6 +69,8 @@ SLACK_USERNAME=Forecast
    7. Find *authorization*, the long string starting with _Bearer_ is the `FORECAST_AUTH_TOKEN`.
    8. Find *forecast-account-id*, the value is your `FORECAST_ACCOUNT_ID`.
 
+  Note that the auth token may expire and then you need to set a new one. If this is the case the a DM will be sent (see `SLACK_FORECAST_ADMIN`).
+
 * `PEOPLE_EXCLUDE_FILTER` - Comma separated list of people IDs to exclude
 * `PROJECT_ID_TIME_OFF` - Project ID of what is time off
 * `CLIENT_ID_INTERNAL` - Client ID to determine what is internal work
@@ -77,6 +80,7 @@ SLACK_USERNAME=Forecast
 * `SLACK_CHANNEL` - Slack channel to post message in (without `#`)
 * `SLACK_ICON_URL` - URL to Slack message icon
 * `SLACK_USERNAME` - Slack username to use when posting message
+* `SLACK_FORECAST_ADMIN` - Slack user (username without leading @-character) to DM if failing to retrieve data from Forecast
 
 ## Tests
 
