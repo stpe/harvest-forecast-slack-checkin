@@ -14,6 +14,7 @@ module.exports = (personActivity, projects, clients) => {
       }
 
       // otherwise use client name
-      return `_${clients[project.client_id].name}_`;
+      let client = clients[project.client_id] || project;
+      return `_${client.name}_`;
     });
 };
