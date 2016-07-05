@@ -1,4 +1,4 @@
-# Daily Forecast Checkin Slack Integration
+# Daily Harvest Forecast Checkin Slack Integration
 
 This is a Slack integration that does post a summary of what each person is planning to do the current day according to [Harvest Forecast](https://www.getharvest.com/forecast).
 
@@ -16,7 +16,7 @@ At [Rebel & Bird](http://www.rebelandbird.com/) we use Forecast to schedule the 
 
 ## Future
 
-This is just a first hack, and there are more potentially useful enhancements that could be made.
+This is just a first stab at this, and there are certainly more potentially useful enhancements that could be made.
 
 With a greater number of people it may not be feasible to just post a huge list; support for posting in different channels depending on team, location, etc is a possible solution.
 
@@ -121,3 +121,16 @@ To deploy to [Heroku](https://www.heroku.com) you need to have an account and ha
     `heroku addons:open scheduler`
 
   Add a new job where the command is simply `worker` scheduled daily to the time you want the message posted in Slack.
+
+## Changelog
+
+#### 0.2.0
+
+  * Support adjacent time-off assignments for more correct guess when someone will be back after time off (previously adjacent assignment were ignored and only the current one was used).
+  * Support assignments assigned to everyone.
+  * Use a long format to display names when multiple persons share the same first name.
+  * Notify Slack user with DM if failing to retrieve data from Forecast.
+
+#### 0.0.1
+
+  * First version.
