@@ -12,7 +12,7 @@ activity.get = function(person, assignments) {
 activity.today = function(person, assignments) {
   return activity
     .get(person, assignments)
-    .filter(a => moment().isBetween(a.start_date, a.end_date, null, "[]"));
+    .filter(a => moment().isBetween(a.start_date, a.end_date, "day", "[]"));
 };
 
 module.exports = activity;
