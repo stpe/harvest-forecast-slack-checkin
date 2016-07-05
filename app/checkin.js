@@ -18,7 +18,7 @@ var slack = require("./lib/slack");
 
 var options = {
   startDate: moment(),
-  endDate: moment()
+  endDate: moment().add(2, "months")  // how far to look ahead for assignments (e.g. used to calculate when back from time-off)
 };
 
 // skip if weekend
@@ -48,18 +48,19 @@ Promise.all([
 
   people.forEach(p => {
     // get person activity for current day
-    let personActivity = activity.get(p, assignments);
+    let personActivityToday = activity.today(p, assignments);
 
-    if (personActivity.length === 0) {
+    if (personActivityToday.length === 0) {
       // no entry for person
       msg.push(`${personName(p)} got no entry for today.`);
-    } else if (personActivity.length === 1 && personActivity[0].project_id === parseInt(process.env.PROJECT_ID_TIME_OFF)) {
+    } else if (personActivityToday.length === 1 && personActivityToday[0].project_id === parseInt(process.env.PROJECT_ID_TIME_OFF)) {
       // person got time off and does nothing else
-      let endDate = personTimeOff(personActivity);
+      let personAllActivities = activity.get(p, assignments);
+      let endDate = personTimeOff(personAllActivities);
       msg.push(`${personName(p)} is off and will be back ${endDate.format("YYYY-MM-DD")}.`);
     } else {
       // normal assignments (but ignore partial day time off)
-      let activities = personActivities(personActivity, projects, clients);
+      let activities = personActivities(personActivityToday, projects, clients);
       msg.push(`${personName(p)} will work with ${conjunct(activities)}.`);
     }
   });
