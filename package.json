@@ -11,7 +11,7 @@
     "test": "test"
   },
   "scripts": {
-    "start": "foreman run worker",
+    "start": "node app/checkin.js",
     "test": "mocha test && eslint ."
   },
   "author": "Stefan Pettersson <stefpet@gmail.com> (https://github.com/stpe/)",
