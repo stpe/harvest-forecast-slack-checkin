@@ -90,7 +90,7 @@ Perform tests by running:
 
 ## Run locally
 
-`npm start`
+`npm run checkin`
 
 ## Deploy to Heroku
 
