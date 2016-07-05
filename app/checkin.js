@@ -31,11 +31,6 @@ Promise.all([
   forecast.clients(),
   forecast.assignments(options)
 ]).then(data => {
-  let people = data[0];
-  let projects = lookup(data[1]);
-  let clients = lookup(data[2]);
-  let assignments = data[3];
-
   // send DM to script admin if failed to retrieve something
   if (data.some(d => !d)) {
     console.error("Could not retrieve data from Forecast.");
@@ -47,6 +42,11 @@ Promise.all([
     }
     return;
   }
+
+  let people = data[0];
+  let projects = lookup(data[1]);
+  let clients = lookup(data[2]);
+  let assignments = data[3];
 
   people = peopleFilter
     // exclude persons
