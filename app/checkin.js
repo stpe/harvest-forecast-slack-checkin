@@ -38,8 +38,16 @@ Promise.all([
   let clients = lookup(data[2]);
   let assignments = data[3];
 
-  // exclude persons
-  people = peopleFilter.exclude(people, process.env.PEOPLE_EXCLUDE_FILTER);
+  people = peopleFilter
+    // exclude persons
+    .exclude(people, process.env.PEOPLE_EXCLUDE_FILTER)
+    // noticed weird case with trailing space, this fixes it
+    .map(p => {
+      p.first_name = p.first_name.trim();
+      p.last_name = p.last_name.trim();
+
+      return p;
+    });
 
   // sort persons alphabetically
   people.sort((a, b) => a.first_name.localeCompare(b.first_name));
@@ -52,16 +60,16 @@ Promise.all([
 
     if (personActivityToday.length === 0) {
       // no entry for person
-      msg.push(`${personName(p)} got no entry for today.`);
+      msg.push(`${personName(p, people)} got no entry for today.`);
     } else if (personActivityToday.length === 1 && personActivityToday[0].project_id === parseInt(process.env.PROJECT_ID_TIME_OFF)) {
       // person got time off and does nothing else
       let personAllActivities = activity.get(p, assignments);
       let endDate = personTimeOff(personAllActivities);
-      msg.push(`${personName(p)} is off and will be back ${endDate.format("YYYY-MM-DD")}.`);
+      msg.push(`${personName(p, people)} is off and will be back ${endDate.format("YYYY-MM-DD")}.`);
     } else {
       // normal assignments (but ignore partial day time off)
       let activities = personActivities(personActivityToday, projects, clients);
-      msg.push(`${personName(p)} will work with ${conjunct(activities)}.`);
+      msg.push(`${personName(p, people)} will work with ${conjunct(activities)}.`);
     }
   });
 
