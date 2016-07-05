@@ -20,7 +20,7 @@ This is just a first stab at this, and there are certainly more potentially usef
 
 With a greater number of people it may not be feasible to just post a huge list; support for posting in different channels depending on team, location, etc is a possible solution.
 
-Feel free to [submit pull requests](https://github.com/stpe/harvest-forecast-slack-checkin/pulls) or [suggest enhancements](https://github.com/stpe/harvest-forecast-slack-checkin/issues).
+Feel free to [submit pull requests](https://github.com/stpe/harvest-forecast-slack-checkin/pulls), [suggest enhancements](https://github.com/stpe/harvest-forecast-slack-checkin/issues) or just say hi to me [@stpe](https://twitter.com/stpe).
 
 ## Installation
 
