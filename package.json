@@ -4,7 +4,7 @@
   "description": "Automatic daily checkin from Forecast",
   "main": "app/checkin.js",
   "engines": {
-    "node": "5.4.0",
+    "node": "5.10.1",
     "npm": "3.5.2"
   },
   "directories": {
