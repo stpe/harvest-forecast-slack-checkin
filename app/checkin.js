@@ -60,7 +60,7 @@ Promise.all([
 
     if (personActivityToday.length === 0) {
       // no entry for person
-      msg.push(`${personName(p, people)} got no entry for today.`);
+      msg.push(`${personName(p, people)} has no entry for today.`);
     } else if (personActivityToday.length === 1 && personActivityToday[0].project_id === parseInt(process.env.PROJECT_ID_TIME_OFF)) {
       // person got time off and does nothing else
       let personAllActivities = activity.get(p, assignments);
