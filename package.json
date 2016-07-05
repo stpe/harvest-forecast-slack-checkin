@@ -1,5 +1,5 @@
 {
-  "name": "slack-forecast-checkin",
+  "name": "harvest-forecast-slack-checkin",
   "version": "0.0.1",
   "description": "Automatic daily checkin from Forecast",
   "main": "app/checkin.js",
