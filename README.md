@@ -100,9 +100,9 @@ To deploy to [Heroku](https://www.heroku.com) you need to have an account and ha
 
     `heroku create your-appname-of-choice`
 
-2. Push your local configuration to Heroku:
+2. Set the environment variables using:
 
-    `heroku config:push`
+    `heroku config:set KEY=VALUE`
 
 3. Deploy the code to Heroku:
 
