@@ -28,8 +28,8 @@
     "slack-node": "0.2.0"
   },
   "devDependencies": {
-    "should": "8.2.2"
     "eslint": "3.0.0",
     "nock": "8.0.0",
+    "should": "9.0.2"
   }
 }
